@@ -29,7 +29,7 @@ roundness = 2; // [0:0.1:10]
 
 /* [Output Settings] */
 // Round edges off?
-debug = false;
+debug = false; // [0:false, 1:true]
 
 // Global $fn value
 resolution = 20; // [8:2:100]
@@ -63,7 +63,7 @@ module tapWrench(tap_size, tap_hegiht, flex_hole_diameter, grip_length, grip_wid
 module solidTapWrenchCenter(tap_size, flex_hole_diameter, material_thickness, tap_height, debug, roundness) {
 	diameter = diameter(tap_size, flex_hole_diameter, material_thickness);
 
-	if(debug) {
+	if(debug || roundness==0) {
 		cylinder(d=diameter, h=tap_height);
 	} else {
 		difference() {
@@ -148,7 +148,7 @@ module rcube(size=[1,1,1], center=false, radius=1, debug=false) {
 		}			
 	}
 	
-	if(debug) {
+	if(debug || radius==0) {
 		cube(size=size, center=center);
 	} else {
 	
