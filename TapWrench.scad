@@ -31,7 +31,7 @@ roundness = 2; // [0:0.1:10]
 // Round edges off?
 debug = false;
 
-// $fn - don't care too much about it
+// Global $fn value
 resolution = 20; // [8:2:100]
 
 /* [Hidden] */
@@ -130,7 +130,7 @@ module rcube(size=[1,1,1], center=false, radius=1, debug=false) {
 			rotate(rotation) {
 				difference() {
 					translate([(radius)/2 + 1/4,(radius)/2 + 1/4,0]) {
-						cube([radius/2 + 1, radius/2 + 1, length + 4], center=true);
+						cube([radius + 1, radius + 1, length + 4], center=true);
 					}
 					cylinder(h=length + 2, r=radius, center=true);
 				}
@@ -141,7 +141,7 @@ module rcube(size=[1,1,1], center=false, radius=1, debug=false) {
 		translate(translation) {
 			rotate(rotation) {
 				difference() {
-					cube([radius/2 + 1, radius/2 + 1, radius/2 + 1]);
+					cube([radius + 1, radius + 1, radius + 1]);
 					sphere(r=radius);
 				}
 			}
