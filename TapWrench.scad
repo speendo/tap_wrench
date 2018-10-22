@@ -123,35 +123,7 @@ function diameter(tap_size, flex_hole_diamter, material_thickness) = sqrt(2)*tap
 
 
 // Helper Modules
-module rcube(size=[1,1,1], center=false, radius=1, debug=false,
-		bo, ce, to,
-		fr, ri, ba, le,
-		bf, br, bb, bl,
-		cfl, cfr, cbr, cbl,
-		tf, tr, tb, tl) {
-		
-	// define all values
-	bo = bo == undef ? true : bo;
-	ce = ce == undef ? true : ce;
-	to = to == undef ? true : to;
-	
-	fr = fr == undef ? true : fr;
-	ri = ri == undef ? true : ri;
-	ba = ba == undef ? true : ba;
-	le = le == undef ? true : le;
-	
-	bf = bf == undef ? (bo && fr) : bf;
-	br = br == undef ? (bo && ri) : br;
-	bb = bb == undef ? (bo && ba) : bb;
-	bl = bl == undef ? (bo && le) : bl;
-	cfl = cfl == undef ? (ce && fr && le) : cfl;
-	cfr = cfr == undef ? (ce && fr && ri) : cfr;
-	cbr = cbr == undef ? (ce && ba && ri) : cbr;
-	cbl = cbl == undef ? (ce && ba && le) : cbl;
-	tf = tf == undef ? (to && fr) : tf;
-	tr = tr == undef ? (to && ri) : tr;
-	tb = tb == undef ? (to && ba) : tb;
-	tl = tl == undef ? (to && le) : tl;
+module rcube(size=[1,1,1], center=false, radius=1, debug=false) {
 	
 	module roundEdge(length, translation=[0,0,0], rotation=[0,0,0]) {
 		translate(translation) {
@@ -193,71 +165,29 @@ module rcube(size=[1,1,1], center=false, radius=1, debug=false,
 					z = size[2];
 			
 					// edges
-					if(bf) {
-						roundEdge(x,[0,-y/2 + radius,-z/2 + radius],[180,90,0]);
-					}
-					if(br) {
-						roundEdge(y,[x/2 - radius,0,-z/2 + radius],[90,90,0]);
-					}
-					if(bb) {
-						roundEdge(x,[0,y/2 - radius,-z/2 + radius],[0,90,0]);
-					}
-					if(bl) {
-						roundEdge(y,[-x/2 + radius,0,-z/2 + radius],[90,180,0]);
-					}
-					if(cfl) {
-						roundEdge(z,[-x/2 + radius,-y/2 + radius,0],[0,0,180]);
-					}
-					if(cfr) {
-						roundEdge(z,[x/2 - radius,-y/2 + radius,0],[0,0,270]);
-					}
-					if(cbl) {
-						roundEdge(z,[-x/2 + radius,y/2 - radius,0],[0,0,90]);
-					}
-					if(cbr) {
-						roundEdge(z,[x/2 - radius,y/2 - radius,0],[0,0,0]);
-					}
-					if(bf) {
-						roundEdge(x,[0,-y/2 + radius,-z/2 + radius],[180,90,0]);
-					}
-					if(tf) {
-						roundEdge(x,[0,-y/2 + radius,z/2 - radius],[180,270,0]);
-					}
-					if(tr) {
-						roundEdge(y,[x/2 - radius,0,z/2 - radius],[270,270,0]);
-					}
-					if(tb) {
-						roundEdge(x,[0,y/2 - radius,z/2 - radius],[0,270,0]);
-					}
-					if(tl) {
-						roundEdge(y,[-x/2 + radius,0,z/2 - radius],[270,180,0]);
-					}
+					roundEdge(x,[0,-y/2 + radius,-z/2 + radius],[180,90,0]);
+					roundEdge(y,[x/2 - radius,0,-z/2 + radius],[90,90,0]);
+					roundEdge(x,[0,y/2 - radius,-z/2 + radius],[0,90,0]);
+					roundEdge(y,[-x/2 + radius,0,-z/2 + radius],[90,180,0]);
+					roundEdge(z,[-x/2 + radius,-y/2 + radius,0],[0,0,180]);
+					roundEdge(z,[x/2 - radius,-y/2 + radius,0],[0,0,270]);
+					roundEdge(z,[-x/2 + radius,y/2 - radius,0],[0,0,90]);
+					roundEdge(z,[x/2 - radius,y/2 - radius,0],[0,0,0]);
+					roundEdge(x,[0,-y/2 + radius,-z/2 + radius],[180,90,0]);
+					roundEdge(x,[0,-y/2 + radius,z/2 - radius],[180,270,0]);
+					roundEdge(y,[x/2 - radius,0,z/2 - radius],[270,270,0]);
+					roundEdge(x,[0,y/2 - radius,z/2 - radius],[0,270,0]);
+					roundEdge(y,[-x/2 + radius,0,z/2 - radius],[270,180,0]);
 
 					// corners
-					if(bf && bl && cfl) {
-						roundFullCorner([-x/2 + radius,-y/2 + radius,-z/2 + radius], [180,90,0]);
-					}
-					if(bf && br && cfr) {
-						roundFullCorner([x/2 - radius,-y/2 + radius,-z/2 + radius], [180,0,0]);
-					}
-					if(bb && br && cbr) {
-						roundFullCorner([x/2 - radius,y/2 - radius,-z/2 + radius], [0,90,0]);
-					}
-					if(bb && bl && cbl) {
-						roundFullCorner([-x/2 + radius,y/2 - radius,-z/2 + radius], [0,180,0]);
-					}
-					if(tf && tl && cfl) {
-						roundFullCorner([-x/2 + radius,-y/2 + radius,z/2 - radius], [0,0,180]);
-					}
-					if(tf && tr && cfr) {
-						roundFullCorner([x/2 - radius,-y/2 + radius,z/2 - radius], [0,0,270]);
-					}
-					if(tb && tr && cbr) {
-						roundFullCorner([x/2 - radius,y/2 - radius,z/2 - radius], [0,0,0]);
-					}
-					if(tb && tl && cbl) {
-						roundFullCorner([-x/2 + radius,y/2 - radius,z/2 - radius], [0,0,90]);
-					}
+					roundFullCorner([-x/2 + radius,-y/2 + radius,-z/2 + radius], [180,90,0]);
+					roundFullCorner([x/2 - radius,-y/2 + radius,-z/2 + radius], [180,0,0]);
+					roundFullCorner([x/2 - radius,y/2 - radius,-z/2 + radius], [0,90,0]);
+					roundFullCorner([-x/2 + radius,y/2 - radius,-z/2 + radius], [0,180,0]);
+					roundFullCorner([-x/2 + radius,-y/2 + radius,z/2 - radius], [0,0,180]);
+					roundFullCorner([x/2 - radius,-y/2 + radius,z/2 - radius], [0,0,270]);
+					roundFullCorner([x/2 - radius,y/2 - radius,z/2 - radius], [0,0,0]);
+					roundFullCorner([-x/2 + radius,y/2 - radius,z/2 - radius], [0,0,90]);
 				}
 			}
 		}
